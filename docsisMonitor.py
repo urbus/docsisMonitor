@@ -153,6 +153,7 @@ class gui(wx.MDIParentFrame):
 			list.SetItem(1, 2, "{0} MHz".format(self.modem.upstreamFreq()))
 			list.SetItem(1, 3, "{0} MHz".format(self.modem.upstreamWidth()))
 			
+			
 						
 		def dynamicFast(self, list):
 			"""
@@ -182,7 +183,9 @@ class gui(wx.MDIParentFrame):
 		#field with dynamic data, must be updated frequently
 		thread.start_new_thread(self.loopFunction, (dynamicSlow, (self, list), 10, "rfInfo"))
 		#thread.start_new_thread(self.loopFunction, (dynamicFast, (self, list), 0.5))
-
+		
+		meter = self.meterBarWidget(self, -1, -30, 30, 0, (100,100))#test for meter bar
+		
 		sizer = wx.BoxSizer(wx.VERTICAL)
 		sizer.Add(list, 0, wx.ALL| wx.EXPAND, 5)
 		rfInfoWindow.SetSizer(sizer)
@@ -331,10 +334,54 @@ class gui(wx.MDIParentFrame):
 						
 	def exit(self, e):
 		"""
-		functino to exit the program
+		function to exit the program
 		"""
 		self.Close()
 		
+	class meterBarWidget(wx.Panel):
+
+		def __init__(self, parent, id, min, max, level, pos1):
+			wx.Panel.__init__(self, parent, id, size=((200*3)+4,50))
+			
+			self.level = level
+			self.min = min
+			self.max = max
+			self.parent = parent
+			self.SetBackgroundColour('#000000')
+			
+			self.Bind(wx.EVT_PAINT, self.meter)
+			
+		def meter(self, event):
+			dc = wx.PaintDC(self)
+			
+			
+			greenOn = '#36ff27'
+			greenOff = '#075100'
+			redOn = '#ff3627'
+			redOff= '#510700'
+			yellowOn= '#fffb27'
+			yellowOff = '#465100'
+			
+			dc.SetDeviceOrigin(0,50)
+			dc.SetAxisOrientation(True, True)
+							
+			def getData(self):
+				"""
+				Function to get Data
+				"""
+				pos = self.level + abs(self.min)#signal position
+				rect = pos / ((self.max-self.min)/200) #each rectangle have a value of
+
+				for i in range(1, 200):
+					if i > rect:
+						dc.SetBrush(wx.Brush(greenOff))
+						dc.DrawRectangle(i*3, 10, 4, 30)
+						
+					else:
+						dc.SetBrush(wx.Brush(greenOn))
+						dc.DrawRectangle(i*3, 10, 4, 30)
+						
+			getData(self)
 
 if __name__ == "__main__":
 	#modem1 = modemLib.modem("10.10.22.2")
