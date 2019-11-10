@@ -10,6 +10,7 @@ class oid:
 	downloadOctets = "1.3.6.1.2.1.2.2.1.16.1"
 	ethUp = "1.3.6.1.2.1.2.2.1.8.1" #1 is up, 2 is down
 	uploadOctets = "1.3.6.1.2.1.2.2.1.10.1"
+	docsisVersion = "1.3.6.1.2.1.10.127.1.1.5.0" # 1: D1.0, 2: D1.1, 3: D2.0, 4: D3.0
 	downstreamSignal = "1.3.6.1.2.1.10.127.1.1.1.1.6.3"
 	upstreamSignal = "1.3.6.1.2.1.10.127.1.2.2.1.3.2"
 	downstreamSNR = "1.3.6.1.2.1.10.127.1.1.4.1.5.3"
